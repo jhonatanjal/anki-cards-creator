@@ -1,8 +1,7 @@
 import unittest
 from unittest.mock import patch
 from anki_cards_creator.card import Card
-from anki_cards_creator.card_creator import *
-
+from anki_cards_creator.card_creator import ask_for_card_info, create_card
 
 
 class CardCreatorTestCase(unittest.TestCase):
@@ -34,3 +33,4 @@ class CardCreatorTestCase(unittest.TestCase):
         with patch('builtins.input', side_effect=self.user_input):
             card = create_card()
         self.assertEqual(card.__dict__, self.card.__dict__)
+
