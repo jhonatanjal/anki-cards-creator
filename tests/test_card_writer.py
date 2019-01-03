@@ -1,6 +1,8 @@
 import unittest
 from anki_cards_creator.card import Card
 import anki_cards_creator.card_writer as card_writer
+import os
+
 
 class CardsWriterTestCase(unittest.TestCase):
     """Tests for 'card_writer.py'."""
@@ -12,11 +14,15 @@ class CardsWriterTestCase(unittest.TestCase):
                     'especially money) in return for something received.'),
                     'I owe you for the taxi')
         self.card = card
+        self.file_name = 'test.txt'
+    
+    def tearDown(self):
+        os.remove(self.file_name) 
 
     def test_write_card(self):
         """Test if the card is write in the file prorperly"""
-        card_writer.write(self.card)
-        with open(card_writer.file_name) as f_obj:
+        card_writer.write(self.card, file_name=self.file_name)
+        with open(self.file_name) as f_obj:
             card_txt = f_obj.readline().strip()
         
         self.assertEqual(card_txt, self.card.to_anki_txt_format())
@@ -27,11 +33,12 @@ class CardsWriterTestCase(unittest.TestCase):
                     'ˈfraɪtfəli',
                     'as submodifier Very (used for emphasis)',
                     'it was frightfully hot')
-        card_writer.write(card, self.card)
+        card_writer.write(card, self.card, file_name=self.file_name)
 
-        with open(card_writer.file_name) as f_obj:
+        with open(self.file_name) as f_obj:
             cards_txt = f_obj.readlines()
         
         self.assertEqual(len(cards_txt), 2)
         self.assertIn(card.to_anki_txt_format() + '\n', cards_txt)        
-        self.assertIn(self.card.to_anki_txt_format() + '\n', cards_txt)        
+        self.assertIn(self.card.to_anki_txt_format() + '\n', cards_txt)     
+

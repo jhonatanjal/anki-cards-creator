@@ -1,4 +1,4 @@
 __pycache__
 .env
 .vscode
-anki_cards.txt
+*anki_cards.txt
