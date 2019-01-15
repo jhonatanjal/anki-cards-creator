@@ -22,4 +22,18 @@ class TestCard(unittest.TestCase):
                              'as submodifier Very (used for emphasis)')
         anki_str_returned = self.card.to_anki_txt_format()
         self.assertEqual(anki_str_returned, anki_str_expected)
+    
+    def test_escape_semicolon(self):
+        """Test that double quotes are put in the string to escape semicolon"""
+        card = Card('mocking',
+                    'ˈmɑkɪŋ', 
+                    'Making fun of someone or something in a cruel way; derisive.', 
+                    'The ruthless scientist changed from mocking to sad.')
+
+        expected = ('The ruthless scientist changed from <b>mocking</b> to sad.; '
+                    '"<b>mocking /ˈmɑkɪŋ/</b><br> Making fun of someone or '
+                    'something in a cruel way; derisive."')
+        
+        self.assertEqual(card.to_anki_txt_format(), expected)
+
 
