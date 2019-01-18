@@ -10,11 +10,10 @@ class Card:
         self.definition = definition
         self.example = example
 
-    #TODO make the method ignore the case of the letter when doing the search
     def __word_in_example_to_bold(self): 
         # Finds the word of the card in the example and wrap it in a bold tag,
         # returning a new string in that format
-        word = re.search(f'{self.word}.*?\w*', self.example).group()
+        word = re.search(f'{self.word}.*?\w*', self.example, re.IGNORECASE).group()
         return self.example.replace(word, f'<b>{word}</b>')
 
     def __handle_semicolon(self, string: str):
